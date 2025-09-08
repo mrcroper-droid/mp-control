@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wcsoft.mapper.ProductMapper" >
+  <resultMap id="BaseResultMap" type="com.wcsoft.entity.Product" >
+    <id column="product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="product_sort" property="productSort" jdbcType="INTEGER" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="update_datetime" property="updateDatetime" jdbcType="TIMESTAMP" />
+    <result column="group_id" property="groupId" jdbcType="VARCHAR" />
+    <result column="group_name" property="groupName" jdbcType="VARCHAR" />
+    <result column="product_desc" property="productDesc" jdbcType="LONGVARCHAR" />
+    <result column="product_img" property="productImg" jdbcType="LONGVARCHAR" />
+    <result column="product_remark" property="productRemark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from product
+    where product_id = #{productId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wcsoft.entity.Product" >
+    insert into product (product_id, product_name, product_sort, 
+      create_datetime, update_datetime, group_id, 
+      group_name, product_desc, product_img, 
+      product_remark)
+    values (#{productId,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, #{productSort,jdbcType=INTEGER}, 
+      #{createDatetime,jdbcType=TIMESTAMP}, #{updateDatetime,jdbcType=TIMESTAMP}, #{groupId,jdbcType=VARCHAR}, 
+      #{groupName,jdbcType=VARCHAR}, #{productDesc,jdbcType=LONGVARCHAR}, #{productImg,jdbcType=LONGVARCHAR}, 
+      #{productRemark,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.wcsoft.entity.Product" >
+    update product
+    <set> 
+    	<if test="productName !=null">
+	      product_name = #{productName,jdbcType=VARCHAR},
+    	</if>
+    	<if test="productSort !=null">
+	      product_sort = #{productSort,jdbcType=INTEGER},
+    	</if>
+    	<if test="productDesc !=null">
+	      product_desc = #{productDesc,jdbcType=LONGVARCHAR},
+    	</if>
+    	<if test="productRemark !=null">
+	      product_remark = #{productRemark,jdbcType=LONGVARCHAR}
+    	</if>
+    	<if test="productImg !=null">
+	      product_img = #{productImg,jdbcType=LONGVARCHAR},
+    	</if>
+    </set>
+    where product_id = #{productId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select product_id, product_name, product_sort, create_datetime, update_datetime, 
+    group_id, group_name, product_desc, product_img, product_remark
+    from product
+    where product_id = #{productId,jdbcType=VARCHAR}
+  </select>
+   <select id="selectByAnyKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select product_id, product_name, product_sort, create_datetime, update_datetime, 
+    group_id, group_name, product_desc, product_img, product_remark
+    from product
+    <where>
+	    <if test="groupId!=null">
+	    	group_id = #{groupId, jdbcType=VARCHAR}
+	    </if>
+	    <if test="productName!=null">
+	    	product_name like "%"#{productName, jdbcType=VARCHAR}"%"
+	    </if>
+    </where>
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select product_id, product_name, product_sort, create_datetime, update_datetime, 
+    group_id, group_name, product_desc, product_img, product_remark
+    from product
+  </select>
+  
+     <select id="selectProductGroup" resultType="Map" parameterType="java.lang.String" >
+	    SELECT
+		product_id productId,
+		product_name productName,
+		product_sort productSort,
+		p.create_datetime pCreateDatetime,
+		p.update_datetime,
+		p.group_id pGroupId,
+		p.group_name pGroupName,
+		product_desc productDesc,
+		product_img productImg,
+		product_remark productRemark,
+		g.group_id groupId,
+		g.group_name groupName,
+		group_sort groupSort,
+		g.create_datetime gCreateDatetime,
+		g.update_datetime gUpdateDatetime,
+		group_desc groupDesc,
+		group_img groupImg,
+		group_remark groupRemark 
+	FROM
+		product p
+		JOIN `group` g ON p.group_id = g.group_id
+    <where>
+	    <if test="groupId!=null">
+	    	p.group_id = #{groupId, jdbcType=VARCHAR}
+	    </if>
+	    <if test="productId!=null">
+	    	and p.product_id = #{productId, jdbcType=VARCHAR}
+	    </if>
+	    <if test="productName!=null">
+	    	and p.product_name like "%"#{productName, jdbcType=VARCHAR}"%"
+	    </if>
+    </where>
+    <if test="sortCreateTimeDesc !=null">
+    	order by p.create_datetime DESC
+    </if>
+    <if test="sortUpdateTimeDesc !=null">
+    	order by p.update_datetime DESC
+    </if>
+    <if test="sortProductNameASC !=null">
+    	order by p.product_name ASC
+    </if>
+    <if test="sortProductNameDESC !=null">
+    	order by p.product_name DESC
+    </if>
+  </select>
+  
+</mapper>

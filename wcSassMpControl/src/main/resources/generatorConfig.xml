@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!-- 配置生成器  mvn mybatis-generator:generate -->
+<generatorConfiguration>
+
+    <classPathEntry location="D:/code/mpweixin/jinguiWechErp/HFOANEW/target/HFOANEW/WEB-INF/lib/mysql-connector-java-5.1.30.jar"/>
+
+    <context id="MysqlTables" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+
+        <property name="autoDelimitKeywords" value="true"/>
+
+        <property name="javaFileEncoding" value="utf-8"/>
+
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="false"/> 
+        </commentGenerator>
+
+          <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3305/shortvideo" userId="root"
+                        password="123456"/>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="true"/>
+        </javaTypeResolver>
+
+       <javaModelGenerator targetPackage="com.wcsoft.entity"
+                            targetProject="D:/code/java/roper-product-display/wcSassProductDisplay/src/main/java/">
+            <property name="enableSubPackages" value="flase"/>
+            <property name="trimStrings" value="flase"/>
+        </javaModelGenerator>
+
+
+        <sqlMapGenerator targetPackage="com.wcsoft.mapper" targetProject="D:/code/java/roper-product-display/wcSassProductDisplay/src/main/resources/mapper/">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+         <javaClientGenerator targetPackage="com.wcsoft.mapper"
+                             targetProject="D:/code/java/roper-product-display/wcSassProductDisplay/src/main/java/com/wcsoft/mapper" type="XMLMAPPER">
+            <property name="enableSubPackages" value="flase"/>
+        </javaClientGenerator>
+
+       	 <table tableName="app_reply"></table>  
+    </context>
+</generatorConfiguration>

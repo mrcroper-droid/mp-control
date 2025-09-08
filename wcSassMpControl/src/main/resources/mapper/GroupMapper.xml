@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wcsoft.mapper.GroupMapper" >
+  <resultMap id="BaseResultMap" type="com.wcsoft.entity.Group" >
+    <id column="group_id" property="groupId" jdbcType="VARCHAR" />
+    <result column="group_name" property="groupName" jdbcType="VARCHAR" />
+    <result column="group_sort" property="groupSort" jdbcType="INTEGER" />
+    <result column="create_datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="update_datetime" property="updateDatetime" jdbcType="TIMESTAMP" />
+    <result column="group_desc" property="groupDesc" jdbcType="LONGVARCHAR" />
+    <result column="group_img" property="groupImg" jdbcType="LONGVARCHAR" />
+    <result column="group_remark" property="groupRemark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from `group`
+    where group_id = #{groupId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="Map">
+    insert into `group` (group_id, group_name, group_sort, 
+      create_datetime, update_datetime, group_desc, 
+      group_img, group_remark)
+    values (#{groupId,jdbcType=VARCHAR}, #{groupName,jdbcType=VARCHAR}, #{groupSort,jdbcType=INTEGER}, 
+      #{createDatetime,jdbcType=TIMESTAMP}, #{updateDatetime,jdbcType=TIMESTAMP}, #{groupDesc,jdbcType=LONGVARCHAR}, 
+      #{groupImg,jdbcType=LONGVARCHAR}, #{groupRemark,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="Map" >
+    update `group`
+    <set>
+     <if test="groupName !=null">
+      group_name = #{groupName,jdbcType=VARCHAR},
+     </if> 
+     <if test="groupSort !=null">
+      group_sort = #{groupSort,jdbcType=INTEGER},
+     </if> 
+     <if test="groupDesc !=null">
+      group_desc = #{groupDesc,jdbcType=LONGVARCHAR},
+     </if> 
+     <if test="groupImg !=null">
+      group_img = #{groupImg,jdbcType=LONGVARCHAR},
+     </if> 
+     <if test="groupRemark !=null">
+      group_remark = #{groupRemark,jdbcType=LONGVARCHAR}
+     </if> 
+    </set>
+    where group_id = #{groupId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select group_id, group_name, group_sort, create_datetime, update_datetime, group_desc, 
+    group_img, group_remark
+    from `group`
+    where group_id = #{groupId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByAnyKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select group_id, group_name, group_sort, create_datetime, update_datetime, group_desc, 
+    group_img, group_remark
+    from `group`
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select group_id, group_name, group_sort, create_datetime, update_datetime, group_desc, 
+    group_img, group_remark
+    from `group`
+  </select>
+</mapper>

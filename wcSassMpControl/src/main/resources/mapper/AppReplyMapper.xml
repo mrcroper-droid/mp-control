@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wcsoft.mapper.AppReplyMapper" >
+  <resultMap id="BaseResultMap" type="com.wcsoft.entity.AppReply" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="app_id" property="appId" jdbcType="VARCHAR" />
+    <result column="msg_type" property="msgType" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="app_id_des" property="appIdDes" jdbcType="VARCHAR" />
+    <result column="thumb_media_id" property="thumbMediaId" jdbcType="VARCHAR" />
+    <result column="media_id" property="mediaId" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="page_path" property="pagePath" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from app_reply
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByAppId" parameterType="java.lang.String" >
+    delete from app_reply
+    where app_id = #{appId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="Map" >
+    insert into app_reply (id, app_id, msg_type, 
+      title, app_id_des, thumb_media_id, 
+      media_id, content, page_path
+      )
+    values (#{id,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, #{msgType,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{appIdDes,jdbcType=VARCHAR}, #{thumbMediaId,jdbcType=VARCHAR}, 
+      #{mediaId,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}, #{pagePath,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.wcsoft.entity.AppReply" >
+    update app_reply
+    set app_id = #{appId,jdbcType=VARCHAR},
+      msg_type = #{msgType,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      app_id_des = #{appIdDes,jdbcType=VARCHAR},
+      thumb_media_id = #{thumbMediaId,jdbcType=VARCHAR},
+      media_id = #{mediaId,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR},
+      page_path = #{pagePath,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, app_id, msg_type, title, app_id_des, thumb_media_id, media_id, content, 
+    page_path
+    from app_reply
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByAppId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, app_id, msg_type, title, app_id_des, thumb_media_id, media_id, content, 
+    page_path
+    from app_reply
+    where app_id = #{appId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, app_id, msg_type, title, app_id_des, thumb_media_id, media_id, content, 
+    page_path
+    from app_reply
+  </select>
+</mapper>

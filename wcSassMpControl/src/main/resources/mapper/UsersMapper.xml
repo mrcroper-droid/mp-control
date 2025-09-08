@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wcsoft.mapper.UsersMapper" >
+  <resultMap id="BaseResultMap" type="com.wcsoft.entity.Users" >
+    <id column="userId" property="userId" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="CHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="deptId" property="deptId" jdbcType="BIGINT" />
+    <result column="deptName" property="deptName" jdbcType="VARCHAR" />
+    <result column="postionId" property="postionId" jdbcType="BIGINT" />
+    <result column="postionName" property="postionName" jdbcType="VARCHAR" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modifyTime" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="lastLoginTime" property="lastLoginTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="headImg" property="headImg" jdbcType="VARCHAR" />
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="openId" property="openId" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="idNo" property="idNo" jdbcType="VARCHAR" />
+    <result column="other" property="other" jdbcType="LONGVARCHAR" />
+    <result column="roleId" property="roleId" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from users
+    where userId = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wcsoft.entity.Users" >
+    insert into users (userId, username, `password`, 
+      phone, `name`, deptId, deptName, 
+      postionId, postionName, createTime, 
+      modifyTime, lastLoginTime, `status`, 
+      headImg, uuid, openId, 
+      `level`, idNo, other, roleId
+      )
+    values (#{userId,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{deptId,jdbcType=BIGINT}, #{deptName,jdbcType=VARCHAR}, 
+      #{postionId,jdbcType=BIGINT}, #{postionName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, 
+      #{headImg,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, 
+      #{level,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, #{other,jdbcType=LONGVARCHAR}, #{roleId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateNameOrPassword" parameterType="Map" >
+    update users
+    <set>
+	    <if test="password!=null">
+	      `password` = #{password,jdbcType=VARCHAR},
+	    </if>
+	    <if test="name!=null">
+	      `name` = #{name,jdbcType=VARCHAR}
+	    </if>
+    </set> 
+    where userId = #{userId,jdbcType=VARCHAR}
+  </update>
+  
+   <update id="updateAnyKey" parameterType="Map" >
+    update users
+    <set>
+	    <if test="postionId!=null">
+	        postionId = #{postionId,jdbcType=BIGINT}
+	    </if>
+	    <if test="uuid!=null">
+	        uuid = #{uuid,jdbcType=VARCHAR}
+	    </if>
+    </set> 
+    where userId = #{userId,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.wcsoft.entity.Users" >
+    update users
+    set username = #{username,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=CHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      deptId = #{deptId,jdbcType=BIGINT},
+      deptName = #{deptName,jdbcType=VARCHAR},
+      postionId = #{postionId,jdbcType=BIGINT},
+      postionName = #{postionName,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      modifyTime = #{modifyTime,jdbcType=TIMESTAMP},
+      lastLoginTime = #{lastLoginTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=TINYINT},
+      headImg = #{headImg,jdbcType=VARCHAR},
+      uuid = #{uuid,jdbcType=VARCHAR},
+      openId = #{openId,jdbcType=VARCHAR},
+      `level` = #{level,jdbcType=VARCHAR},
+      idNo = #{idNo,jdbcType=VARCHAR},
+      other = #{other,jdbcType=LONGVARCHAR}
+    where userId = #{userId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select userId, username, `password`, phone, `name`, deptId, deptName, postionId, 
+    postionName, createTime, modifyTime, lastLoginTime, `status`, headImg, uuid, 
+    openId, `level`, idNo, other,roleId
+    from users
+    where userId = #{userId,jdbcType=VARCHAR}
+  </select>
+   <select id="selectHasCourierUsers" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select u.* from users u right join courier c on u.userId=c.userId AND u.userId = userId = #{userId,jdbcType=VARCHAR}
+  </select>
+   <select id="selectByOpenId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select userId, username, `password`, phone, `name`, deptId, deptName, postionId, 
+    postionName, createTime, modifyTime, lastLoginTime, `status`, headImg, uuid, 
+    openId, `level`, idNo, other,roleId
+    from users
+    where openId = #{openId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select userId, username, `password`, phone, `name`, deptId, deptName, postionId, 
+    postionName, createTime, modifyTime, lastLoginTime, `status`, headImg, uuid, 
+    openId, `level`, idNo, other,roleId
+    from users
+    where username = #{username, jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select userId, username, `password`, phone, `name`, deptId, deptName, postionId, 
+    postionName, createTime, modifyTime, lastLoginTime, `status`, headImg, uuid, 
+    openId, `level`, idNo, other,roleId
+    from users
+  </select>
+   <select id="selectAllMap" resultType="Map" >
+    select userId, username, `password`, phone, `name`, deptId, deptName, postionId, 
+    postionName, createTime, modifyTime, lastLoginTime, `status`, headImg, uuid, 
+    openId, `level`, idNo, other,roleId
+    from users
+  </select>
+  <select id ="selectByAnyKey"  resultMap="BaseResultMap"  parameterType="Map"  >
+  	select  userId, username, phone, `name`, deptId, deptName, postionId, 
+    postionName, createTime, modifyTime, lastLoginTime, `status`, headImg, uuid, 
+    openId, `level`, idNo, other,roleId from users
+  	<where>
+	  	<if test="uuid !=null">
+	  		uuid= #{uuid, jdbcType=VARCHAR}
+	  	</if>
+	  	<if test="userIdArr !=null">
+	  		and user_Id in
+		  	 <foreach collection="userIdArr" open="(" close=")" separator="," item="userId" index="i">
+		  			 #{userId, jdbcType=VARCHAR}
+		  	</foreach>
+	  	</if>
+	  	<if test="deptId!=null">
+	  		and deptId = #{deptId, jdbcType=VARCHAR}
+	  	</if>
+  	</where>
+  </select>
+  <select id="selectUserByLevel" resultMap="BaseResultMap" parameterType="String" >
+  	select * from users where `level` like #{levelLike, jdbcType=VARCHAR} 
+  </select>
+</mapper>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wcsoft.mapper.AppMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.wcsoft.entity.AppMenu" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="p_id" property="pId" jdbcType="VARCHAR" />
+    <result column="app_id" property="appId" jdbcType="VARCHAR" />
+    <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+    <result column="menu_type" property="menuType" jdbcType="VARCHAR" />
+    <result column="menu_key" property="menuKey" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="page_path" property="pagePath" jdbcType="VARCHAR" />
+    <result column="app_id_des" property="appIdDes" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from app_menu
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByAppId" parameterType="java.lang.String" >
+    delete from app_menu
+    where app_id = #{appId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="Map" >
+    insert into app_menu (id, p_id, app_id, 
+      menu_name, menu_type, menu_key, 
+      url, page_path, app_id_des, 
+      content)
+    values (#{id,jdbcType=VARCHAR}, #{pId,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, 
+      #{menuName,jdbcType=VARCHAR}, #{menuType,jdbcType=VARCHAR}, #{menuKey,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{pagePath,jdbcType=VARCHAR}, #{appIdDes,jdbcType=VARCHAR}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.wcsoft.entity.AppMenu" >
+    update app_menu
+    set p_id = #{pId,jdbcType=VARCHAR},
+      app_id = #{appId,jdbcType=VARCHAR},
+      menu_name = #{menuName,jdbcType=VARCHAR},
+      menu_type = #{menuType,jdbcType=VARCHAR},
+      menu_key = #{menuKey,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      page_path = #{pagePath,jdbcType=VARCHAR},
+      app_id_des = #{appIdDes,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, p_id, app_id, menu_name, menu_type, menu_key, url, page_path, app_id_des, 
+    content
+    from app_menu
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, p_id, app_id, menu_name, menu_type, menu_key, url, page_path, app_id_des, 
+    content
+    from app_menu
+  </select>
+  
+    <select id="selectByAnyKey" resultMap="BaseResultMap" >
+    select id, p_id, app_id, menu_name, menu_type, menu_key, url, page_path, app_id_des, 
+    content
+    from app_menu
+    <where>
+    	<if test="appId!=null">
+	    	app_id = #{appId}
+    	</if>
+    	<if test="menuKey!=null">
+    		and menu_key = #{menuKey}
+    	</if>
+    </where>
+  </select>
+</mapper>

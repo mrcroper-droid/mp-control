@@ -1,0 +1,56 @@
+server:
+  port: 8089
+  servlet:
+    context-path: /wcsoftSass
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbc-url: jdbc:mysql://127.0.0.1:3305/shortVideo?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT
+    username: root
+    password: 123456
+  security:
+    user:
+      password: myplaintextpassword
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    jedis.pool.max-active: 20
+    jedis.pool.max-wait: -1
+    jedis.pool.max-idle: 10
+    jedis.pool.min-idle: 0
+    timeout: 1000
+token:
+  header: Authorization
+  secret: 5eb4x7dpl
+  expireTime: 3600000
+  
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+    
+logging:
+  level:
+    com.baomidou.mybatisplus: DEBUG
+    com.mlcx.mapper: DEBUG
+
+default:
+  filePath: /var/www/html/download/
+  fileUrl: https://kmhcds.roper.com.cn/download/
+  #filePath: /usr/local/nginx/html/download/
+  #fileUrl: https://owner.huiyucheng.com/download/
+wx:
+  appId: wxe38e791b5201a6f1
+  appSecret: d164ea286caa8fe6d8d3e2256ca93e7c
+  qrCodeModalPath: /home/hcds/1335755.png
+  qrCodeEnvVer: release
